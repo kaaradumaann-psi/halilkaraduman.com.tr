@@ -41,11 +41,9 @@ p{margin:0}
 }
 .nav-inner{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;gap:16px}
 
-/* logo: kullanıcı kendi logo.png dosyasını ekleyene kadar metin fallback */
+/* logo: kullanıcının kendi logosu (public/logo.png) */
 .logo{display:inline-flex;align-items:center}
-.logo-img{height:48px;width:auto}
-.logo-text-fb{font-family:"Newsreader",serif;font-size:18px;letter-spacing:-.03em;font-weight:400}
-.logo-text-fb span{font-weight:300}
+.logo-img{height:50px;width:auto}
 
 .nav-links{display:flex;align-items:center;gap:26px}
 .nav-link{font-size:13px;color:var(--soft);transition:color .15s}
@@ -110,7 +108,7 @@ p{margin:0}
 }
 .social-btn:hover{color:var(--text);border-color:var(--text);transform:translateY(-2px)}
 
-.hero-photo{justify-self:end;width:min(100%,450px)}
+.hero-photo{justify-self:end;width:min(100%,340px)}
 .hero-photo img{
   width:100%;aspect-ratio:4/5;object-fit:cover;
   border-radius:26px;border:1px solid var(--border);
@@ -221,8 +219,8 @@ p{margin:0}
 .form-note b{color:var(--soft)}
 
 /* ---------- footer ---------- */
-.footer{border-top:1px solid var(--border);padding:26px 0;text-align:center;color:var(--muted);font-size:12.5px}
-.footer b{color:var(--text);font-family:"Newsreader",serif;font-weight:400}
+.footer{border-top:1px solid var(--border);padding:34px 0;text-align:center;color:var(--muted);font-size:12.5px}
+.footer-logo{height:74px;width:auto;margin:0 auto 12px;opacity:.95}
 
 /* ---------- reveal ---------- */
 .reveal{opacity:0;transform:translateY(10px);transition:all .55s ease}

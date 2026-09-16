@@ -29,7 +29,6 @@ export default function App(){
   const [toast, setToast] = useState(null)
   const [form, setForm] = useState({ ad: '', email: '', mesaj: '', website: '' })
   const [sending, setSending] = useState(false)
-  const [logoOk, setLogoOk] = useState(false)
 
   const go = id => {
     const target = document.querySelector(id)
@@ -98,16 +97,8 @@ export default function App(){
       <nav className="nav">
         <div className="container nav-inner">
           <a href="#" className="logo" onClick={goHome} aria-label="Halil Karaduman — Psikolog">
-            {/* Kullanıcının kendi logosu: public/logo.png eklendiğinde otomatik devreye girer */}
-            <img
-              src="/logo.png"
-              alt="Halil Karaduman — Psikolog"
-              className="logo-img"
-              style={{ display: logoOk ? 'block' : 'none' }}
-              onLoad={() => setLogoOk(true)}
-              onError={() => setLogoOk(false)}
-            />
-            {!logoOk && <span className="logo-text-fb">Halil <span>Karaduman</span></span>}
+            {/* Kullanıcının kendi logosu */}
+            <img src="/logo.png" alt="Halil Karaduman — Psikolog" className="logo-img" />
           </a>
           <button className="mobile-toggle" onClick={() => setOpen(v => !v)} aria-label="menü">
             <div className="hamburger"><span style={{ transform: open ? 'translateY(5px) rotate(45deg)' : 'none' }} /><span style={{ opacity: open ? 0 : 1 }} /><span style={{ transform: open ? 'translateY(-5px) rotate(-45deg)' : 'none' }} /></div>
@@ -300,8 +291,8 @@ export default function App(){
 
       <footer className="footer">
         <div className="container">
-          <b>Halil Karaduman</b>  Psikolog &amp; Geliştirici<br />
-          © {new Date().getFullYear()} halilkaraduman.com.tr
+          <img className="footer-logo" src="/logo.png" alt="Halil Karaduman — Psikolog" />
+          Psikolog &amp; Geliştirici · © {new Date().getFullYear()} halilkaraduman.com.tr
         </div>
       </footer>
 
