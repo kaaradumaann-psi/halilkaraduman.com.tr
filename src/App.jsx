@@ -2,66 +2,34 @@ import { useEffect, useState } from 'react'
 import './index.css'
 
 /*
-  Bağlantı kartları — url alanına kendi profil adreslerinizi yazın.
-  Örn: url:'https://github.com/kullaniciadi'
-  url boş bırakılırsa kart tıklanınca "yakında" bildirimi gösterilir.
+  Sosyal bağlantılar — url alanlarına kendi profil adreslerinizi yazın.
+  Küçük logo butonları yeni sekmede açılır (yönlendirir).
 */
-const LINKS = [
-  { id: 'github',    title: 'GitHub',    desc: 'Geliştirdiğim araçlar ve açık kaynak kodlar.', img: '/img/link-github.jpg',    url: '' },
-  { id: 'linkedin',  title: 'LinkedIn',  desc: 'Profesyonel özgeçmişim ve deneyimlerim.',     img: '/img/link-linkedin.jpg',  url: '' },
-  { id: 'instagram', title: 'Instagram', desc: 'Süreçten kareler ve kısa duyurular.',         img: '/img/link-instagram.jpg', url: '' },
-  { id: 'youtube',   title: 'YouTube',   desc: 'Anlatımlar ve proje videoları.',              img: '/img/link-youtube.jpg',   url: '' },
+const SOCIALS = [
+  {
+    id: 'github', label: 'GitHub', url: 'https://github.com/', vb: '0 0 16 16',
+    path: 'M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.29.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z'
+  },
+  {
+    id: 'linkedin', label: 'LinkedIn', url: 'https://www.linkedin.com/', vb: '0 0 24 24',
+    path: 'M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45Z'
+  },
+  {
+    id: 'youtube', label: 'YouTube', url: 'https://www.youtube.com/', vb: '0 0 24 24',
+    path: 'M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81ZM9.55 15.57V8.43L15.82 12l-6.27 3.57Z'
+  },
+  {
+    id: 'instagram', label: 'Instagram', url: 'https://www.instagram.com/', vb: '0 0 24 24',
+    path: 'M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.72 3.72 0 0 1-1.38-.9 3.72 3.72 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.3-1.46.72-2.13 1.38A5.88 5.88 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.79.72 1.46 1.38 2.13a5.88 5.88 0 0 0 2.13 1.38c.76.3 1.64.5 2.91.56 1.28.06 1.69.07 4.95.07s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.88 5.88 0 0 0 2.13-1.38 5.88 5.88 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.88 5.88 0 0 0-1.38-2.13A5.88 5.88 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0Zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84Zm0 10.16a4 4 0 1 1 4-4 4 4 0 0 1-4 4Zm7.85-10.4a1.44 1.44 0 1 1-1.44-1.44 1.44 1.44 0 0 1 1.44 1.44Z'
+  },
 ]
-
-/* Logodaki HK monogramının vektörel çizimi */
-function Monogram({ size = 34 }){
-  return (
-    <svg width={size} height={size * 0.92} viewBox="0 0 120 110" fill="none" aria-hidden="true" className="monogram">
-      <g stroke="currentColor" strokeLinecap="round">
-        {/* H — sol gövde + serifler */}
-        <path d="M20 15v80" strokeWidth="7" />
-        <path d="M12 15h16M12 95h16" strokeWidth="2.5" />
-        {/* H'nin sağ / K'nin sol ortak gövdesi */}
-        <path d="M52 15v80" strokeWidth="7" />
-        <path d="M44 15h16M44 95h16" strokeWidth="2.5" />
-        {/* H'nin orta çubuğundan akıp K'ye bağlanan kıvrım */}
-        <path d="M22 53c12 14 24 12 40-2s8-4 13-2" strokeWidth="4.5" />
-        {/* K'nin üst kolu */}
-        <path d="M54 48c10-10 20-21 28-32" strokeWidth="5" />
-        {/* K'nin sağa uzanan zarif alt bacağı */}
-        <path d="M56 56c14 12 26 26 36 39 4 5 9 8 15 6" strokeWidth="5.5" />
-      </g>
-    </svg>
-  )
-}
-
-function LogoLockup(){
-  return (
-    <span className="logo-lockup">
-      <Monogram size={30} />
-      <span className="logo-text">
-        <span className="logo-name">Halil Karaduman</span>
-        <span className="logo-title">Psikolog</span>
-      </span>
-    </span>
-  )
-}
-
-function FooterBrand(){
-  return (
-    <div className="footer-brand">
-      <Monogram size={46} />
-      <div className="logo-name logo-name--big">Halil Karaduman</div>
-      <div className="logo-title logo-title--lines">Psikolog</div>
-    </div>
-  )
-}
 
 export default function App(){
   const [open, setOpen] = useState(false)
   const [toast, setToast] = useState(null)
   const [form, setForm] = useState({ ad: '', email: '', mesaj: '', website: '' })
   const [sending, setSending] = useState(false)
+  const [logoOk, setLogoOk] = useState(false)
 
   const go = id => {
     const target = document.querySelector(id)
@@ -124,18 +92,22 @@ export default function App(){
     }
   }
   const onMmpi = e => { e.preventDefault(); setToast('MMPI platformu çok yakında — şimdilik aktif değil.') }
-  const onLink = (e, l) => {
-    if(l.url) return // gerçek adres varsa normal link gibi açılır
-    e.preventDefault()
-    setToast(`${l.title} profilim çok yakında eklenecek.`)
-  }
 
   return (
     <>
       <nav className="nav">
         <div className="container nav-inner">
           <a href="#" className="logo" onClick={goHome} aria-label="Halil Karaduman — Psikolog">
-            <LogoLockup />
+            {/* Kullanıcının kendi logosu: public/logo.png eklendiğinde otomatik devreye girer */}
+            <img
+              src="/logo.png"
+              alt="Halil Karaduman — Psikolog"
+              className="logo-img"
+              style={{ display: logoOk ? 'block' : 'none' }}
+              onLoad={() => setLogoOk(true)}
+              onError={() => setLogoOk(false)}
+            />
+            {!logoOk && <span className="logo-text-fb">Halil <span>Karaduman</span></span>}
           </a>
           <button className="mobile-toggle" onClick={() => setOpen(v => !v)} aria-label="menü">
             <div className="hamburger"><span style={{ transform: open ? 'translateY(5px) rotate(45deg)' : 'none' }} /><span style={{ opacity: open ? 0 : 1 }} /><span style={{ transform: open ? 'translateY(-5px) rotate(-45deg)' : 'none' }} /></div>
@@ -170,26 +142,17 @@ export default function App(){
               </button>
               <button className="btn-ghost" onClick={() => go('#hakkimda')}>Beni tanıyın</button>
             </div>
-          </div>
-          <div className="hero-photo reveal">
-            <img src="https://images.unsplash.com/photo-1556157388-97ed244727b5?auto=format&fit=crop&w=900&q=80" alt="Halil Karaduman" />
-          </div>
-        </div>
-
-        {/* Bağlantı kartları — fotoğraf + alt açıklama */}
-        <div className="container">
-          <div className="links reveal">
-            <div className="links-head">Bağlantılar</div>
-            <div className="links-grid">
-              {LINKS.map(l => (
-                <a key={l.id} href={l.url || '#'} className="link-card" onClick={e => onLink(e, l)}
-                   target={l.url ? '_blank' : undefined} rel={l.url ? 'noreferrer' : undefined}>
-                  <img src={l.img} alt={l.title} loading="lazy" />
-                  <div className="link-title">{l.title}</div>
-                  <div className="link-desc">{l.desc}</div>
+            {/* küçük logo butonları — tıklayınca yönlendirir */}
+            <div className="socials">
+              {SOCIALS.map(s => (
+                <a key={s.id} className="social-btn" href={s.url} target="_blank" rel="noreferrer" aria-label={s.label} title={s.label}>
+                  <svg width="16" height="16" viewBox={s.vb} fill="currentColor" aria-hidden="true"><path d={s.path} /></svg>
                 </a>
               ))}
             </div>
+          </div>
+          <div className="hero-photo reveal">
+            <img src="https://images.unsplash.com/photo-1556157388-97ed244727b5?auto=format&fit=crop&w=900&q=80" alt="Halil Karaduman" />
           </div>
         </div>
       </section>
@@ -233,22 +196,19 @@ export default function App(){
             <h2 className="section-title">Üzerinde <em>çalıştığım</em> şeyler</h2>
             <p className="section-desc">Teknoloji ve psikolojiyi birleştiren küçük, sade denemeler. İlk adımım klinisyenler için bir MMPI aracı.</p>
           </div>
-          <article className="work-card reveal">
-            <div className="work-media">
-              <img src="/img/work-mmpi.jpg" alt="MMPI değerlendirme aracı ön izlemesi" loading="lazy" />
+          <div className="card reveal">
+            <div className="card-top">
+              <div className="card-icon">◎</div>
               <span className="card-badge">Yakında</span>
             </div>
-            <div className="work-body">
-              <div className="card-icon">◎</div>
-              <h3>MMPI Değerlendirme Aracı</h3>
-              <p>MMPI formlarını hızlı ve gizlilik odaklı puanlayan bir araç. Sade, hatasız ve klinisyen dostu olması için tasarlanıyor.</p>
-              <button onClick={onMmpi} className="btn-full">
-                MMPI Sitesine Git
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="white" strokeWidth="1.6" /></svg>
-              </button>
-              <div className="hint">Henüz aktif değil — çok yakında</div>
-            </div>
-          </article>
+            <h3>MMPI Değerlendirme Aracı</h3>
+            <p>MMPI formlarını hızlı ve gizlilik odaklı puanlayan bir araç. Sade, hatasız ve klinisyen dostu olması için tasarlanıyor.</p>
+            <button onClick={onMmpi} className="btn-full">
+              MMPI Sitesine Git
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="white" strokeWidth="1.6" /></svg>
+            </button>
+            <div className="hint">Henüz aktif değil — çok yakında</div>
+          </div>
         </div>
       </section>
 
@@ -340,8 +300,8 @@ export default function App(){
 
       <footer className="footer">
         <div className="container">
-          <FooterBrand />
-          <div className="footer-meta">Psikolog &amp; Geliştirici · © {new Date().getFullYear()} halilkaraduman.com.tr</div>
+          <b>Halil Karaduman</b>  Psikolog &amp; Geliştirici<br />
+          © {new Date().getFullYear()} halilkaraduman.com.tr
         </div>
       </footer>
 

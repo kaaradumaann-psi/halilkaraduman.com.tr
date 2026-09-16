@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap');
 
 :root{
   --bg:#FFFFFF;
@@ -10,7 +10,7 @@
   --accent:#0A84FF;
   --radius:16px;
   --max:1120px;
-  --nav-h:76px;
+  --nav-h:72px;
 }
 
 *{box-sizing:border-box}
@@ -41,13 +41,11 @@ p{margin:0}
 }
 .nav-inner{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;gap:16px}
 
-/* logo kilidi: monogram + isim + unvan */
-.logo{display:inline-flex;align-items:center;color:var(--text)}
-.logo-lockup{display:inline-flex;align-items:center;gap:11px}
-.monogram{color:#161616;flex:none}
-.logo-text{display:flex;flex-direction:column;line-height:1.05}
-.logo-name{font-family:"Cormorant Garamond",serif;font-size:18px;font-weight:600;letter-spacing:.01em}
-.logo-title{font-size:8.5px;letter-spacing:.44em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+/* logo: kullanıcı kendi logo.png dosyasını ekleyene kadar metin fallback */
+.logo{display:inline-flex;align-items:center}
+.logo-img{height:48px;width:auto}
+.logo-text-fb{font-family:"Newsreader",serif;font-size:18px;letter-spacing:-.03em;font-weight:400}
+.logo-text-fb span{font-weight:300}
 
 .nav-links{display:flex;align-items:center;gap:26px}
 .nav-link{font-size:13px;color:var(--soft);transition:color .15s}
@@ -67,7 +65,7 @@ p{margin:0}
 }
 
 /* ---------- HERO ---------- */
-.hero{padding:64px 0 12px}
+.hero{padding:64px 0 20px}
 .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
 .hero-copy{text-align:left}
 .kicker{
@@ -101,32 +99,23 @@ p{margin:0}
   transition:all .15s;
 }
 .btn-ghost:hover{border-color:var(--text)}
+
+/* küçük sosyal logo butonları — tıklayınca yönlendirir */
+.socials{display:flex;gap:10px;margin-top:26px}
+.social-btn{
+  width:40px;height:40px;border-radius:50%;
+  border:1px solid var(--border);background:white;
+  display:grid;place-items:center;color:var(--soft);
+  transition:all .15s;
+}
+.social-btn:hover{color:var(--text);border-color:var(--text);transform:translateY(-2px)}
+
 .hero-photo{justify-self:end;width:min(100%,450px)}
 .hero-photo img{
   width:100%;aspect-ratio:4/5;object-fit:cover;
   border-radius:26px;border:1px solid var(--border);
   box-shadow:0 30px 70px rgba(0,0,0,.10);
 }
-
-/* ---------- bağlantı kartları (fotoğraf + açıklama) ---------- */
-.links{margin:56px 0 10px}
-.links-head{
-  display:flex;align-items:center;gap:14px;
-  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
-  margin-bottom:16px;
-}
-.links-head::after{content:"";flex:1;height:1px;background:var(--border)}
-.links-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.link-card{
-  display:block;background:white;border:1px solid var(--border);border-radius:var(--radius);
-  padding:12px;transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-}
-.link-card:hover{transform:translateY(-3px);box-shadow:0 16px 38px rgba(0,0,0,.08);border-color:#d9d9de}
-.link-card img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:11px;background:var(--bg-soft)}
-.link-title{margin-top:11px;font-size:14px;font-weight:600;letter-spacing:-.01em;display:flex;align-items:center;gap:6px}
-.link-title::after{content:"↗";font-size:11px;color:var(--muted);transition:transform .15s}
-.link-card:hover .link-title::after{transform:translate(2px,-2px);color:var(--text)}
-.link-desc{margin-top:3px;font-size:12px;color:var(--soft);line-height:1.55}
 
 /* ---------- bölümler ---------- */
 .section{padding:72px 0;border-top:1px solid var(--border);scroll-margin-top:calc(var(--nav-h) + 12px)}
@@ -157,32 +146,24 @@ p{margin:0}
 .facts b{font-weight:600;text-align:right}
 
 /* ---------- çalışmalar ---------- */
-.work-card{
-  display:grid;grid-template-columns:1.05fr .95fr;
-  border:1px solid var(--border);border-radius:20px;overflow:hidden;background:white;
+.card{
+  max-width:680px;margin:0;
+  background:white;border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px;text-align:left;
 }
-.work-media{position:relative;background:var(--bg-soft)}
-.work-media img{width:100%;height:100%;object-fit:cover;min-height:340px}
-.work-media .card-badge{
-  position:absolute;top:14px;left:14px;
-  font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
-  border:1px solid var(--border);padding:5px 10px;border-radius:999px;background:white;
-}
-.work-body{padding:32px;display:flex;flex-direction:column;align-items:flex-start}
-.card-icon{
-  width:36px;height:36px;border-radius:10px;background:var(--bg-soft);border:1px solid var(--border);
-  display:grid;place-items:center;font-size:15px;margin-bottom:14px;
-}
-.work-body h3{font-family:"Newsreader",serif;font-size:24px;font-weight:400;letter-spacing:-.02em;margin:0 0 8px}
-.work-body p{color:var(--soft);font-size:14px;line-height:1.7;margin:0 0 20px}
+.card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.card-icon{width:36px;height:36px;border-radius:10px;background:var(--bg-soft);border:1px solid var(--border);display:grid;place-items:center;font-size:15px}
+.card-badge{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);padding:4px 9px;border-radius:999px;background:var(--bg-soft)}
+.card h3{font-size:17px;margin:0 0 6px;letter-spacing:-.02em}
+.card p{font-size:13.5px;color:var(--soft);line-height:1.65;margin:0 0 18px}
 .btn-full{
-  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  width:100%;display:inline-flex;align-items:center;justify-content:center;gap:6px;
   background:var(--text);color:white;border:1px solid var(--text);
-  padding:12px 22px;border-radius:999px;font-size:14px;font-weight:500;cursor:pointer;
+  padding:12px;border-radius:999px;font-size:14px;font-weight:500;cursor:pointer;
   transition:all .15s;
 }
 .btn-full:hover{background:#1a1a1a}
-.hint{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:10px}
+.hint{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:9px}
 
 /* ---------- özgeçmiş ---------- */
 .resume-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:20px;align-items:start}
@@ -240,13 +221,8 @@ p{margin:0}
 .form-note b{color:var(--soft)}
 
 /* ---------- footer ---------- */
-.footer{border-top:1px solid var(--border);padding:52px 0 40px;text-align:center}
-.footer-brand{display:flex;flex-direction:column;align-items:center;gap:9px}
-.footer-brand .monogram{color:#161616}
-.logo-name--big{font-size:26px}
-.logo-title--lines{display:inline-flex;align-items:center;gap:12px;margin-top:2px}
-.logo-title--lines::before,.logo-title--lines::after{content:"";width:30px;height:1px;background:#c9c9ce}
-.footer-meta{margin-top:18px;color:var(--muted);font-size:12.5px}
+.footer{border-top:1px solid var(--border);padding:26px 0;text-align:center;color:var(--muted);font-size:12.5px}
+.footer b{color:var(--text);font-family:"Newsreader",serif;font-weight:400}
 
 /* ---------- reveal ---------- */
 .reveal{opacity:0;transform:translateY(10px);transition:all .55s ease}
@@ -265,10 +241,7 @@ p{margin:0}
   .hero{padding-top:44px}
   .hero-grid{grid-template-columns:1fr;gap:36px}
   .hero-photo{justify-self:start;width:100%;max-width:460px}
-  .links-grid{grid-template-columns:repeat(2,1fr)}
   .about-grid{grid-template-columns:1fr;gap:30px}
-  .work-card{grid-template-columns:1fr}
-  .work-media img{min-height:240px;max-height:320px}
   .resume-grid{grid-template-columns:1fr}
   .contact-grid{grid-template-columns:1fr;gap:34px}
 }
@@ -276,6 +249,5 @@ p{margin:0}
   .resume-block{padding-inline:16px}
   .resume-item:not(.resume-item--education){grid-template-columns:1fr;gap:5px}
   .resume-period{padding-top:0}
-  .links-grid{gap:12px}
   .form-wrap{padding:20px}
 }
