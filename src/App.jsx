@@ -15,10 +15,42 @@ export default function App(){
   useEffect(()=>{ if(!toast) return; const t=setTimeout(()=>setToast(null),3200); return()=>clearTimeout(t)},[toast])
 
   const go=id=>{document.querySelector(id)?.scrollIntoView({behavior:'smooth'});setOpen(false)}
-  const onSubmit=e=>{
+  const onSubmit=async e=>{
     e.preventDefault()
     if(!form.ad||!form.email||!form.mesaj){setToast('Lütfen tüm alanları doldurun.');return}
-    setSending(true); setTimeout(()=>{setSending(false);setToast('Mesajın alındı — en kısa sürede döneceğim.');setForm({ad:'',email:'',mesaj:''})},800)
+    // basit e-posta kontrolü
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)){setToast('Lütfen geçerli bir e-posta girin.');return}
+    setSending(true)
+    try{
+      // FormSubmit.co AJAX — ücretsiz, anahtarsız. İlk gönderimde iletisim@halilkaraduman.com.tr adresine gelen onay mailini onaylaman yeterli.
+      const res = await fetch('https://formsubmit.co/ajax/iletisim@halilkaraduman.com.tr',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body: JSON.stringify({
+          name: form.ad,
+          email: form.email,
+          message: form.mesaj,
+          _subject: `halilkaraduman.com.tr — ${form.ad} iletisim formu`,
+          _captcha: 'false',
+          _template: 'table'
+        })
+      })
+      const data = await res.json().catch(()=>({}))
+      if(res.ok){
+        setToast('Mesajın gönderildi ✓ — en kısa sürede döneceğim.')
+        setForm({ad:'',email:'',mesaj:''})
+      } else {
+        throw new Error(data.message || 'Gonderim basarisiz')
+      }
+    } catch(err){
+      // Fallback: kullanıcının mail uygulamasını aç — en garanti yöntem
+      const subject = encodeURIComponent(`halilkaraduman.com.tr — ${form.ad}`)
+      const body = encodeURIComponent(`Ad: ${form.ad}\nE-posta: ${form.email}\n\nMesaj:\n${form.mesaj}`)
+      window.location.href = `mailto:iletisim@halilkaraduman.com.tr?subject=${subject}&body=${body}`
+      setToast('Mail uygulamanız açıldı — oradan gönderebilirsiniz. (Otomatik gönderimde sorun oldu)')
+    } finally {
+      setSending(false)
+    }
   }
   const onMmpi=e=>{e.preventDefault(); setToast('MMPI platformu çok yakında — şimdilik aktif değil.')}
 
@@ -118,12 +150,14 @@ export default function App(){
             </p>
           </div>
           <div className="form-wrap reveal">
-            <form onSubmit={onSubmit}>
-              <div className="field"><label>Adınız</label><input value={form.ad} onChange={e=>setForm({...form,ad:e.target.value})} placeholder="Ad Soyad"/></div>
-              <div className="field"><label>E-posta</label><input type="email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} placeholder="ornek@mail.com"/></div>
-              <div className="field"><label>Mesajınız</label><textarea value={form.mesaj} onChange={e=>setForm({...form,mesaj:e.target.value})} placeholder="Merhaba Halil, ..." rows="4"/></div>
+            <form onSubmit={onSubmit} noValidate>
+              <div className="field"><label>Adınız</label><input value={form.ad} onChange={e=>setForm({...form,ad:e.target.value})} placeholder="Ad Soyad" required autoComplete="name"/></div>
+              <div className="field"><label>E-posta</label><input type="email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} placeholder="ornek@mail.com" required autoComplete="email"/></div>
+              <div className="field"><label>Mesajınız</label><textarea value={form.mesaj} onChange={e=>setForm({...form,mesaj:e.target.value})} placeholder="Merhaba Halil, ..." rows="4" required/></div>
+              {/* FormSubmit honeypot - botlar icin gizli */}
+              <input type="text" name="_honey" style={{display:'none'}} tabIndex={-1} autoComplete="off"/>
               <button type="submit" className="btn-submit" disabled={sending}>{sending?'Gönderiliyor…':'Gönder'} <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="white" strokeWidth="1.6"/></svg></button>
-              <div className="form-note">Sade ve gizliliğe saygılı.</div>
+              <div className="form-note">Gönder’e basınca doğrudan <b>iletisim@halilkaraduman.com.tr</b> adresine iletilir. İlk gönderimden sonra gelen onay mailini onaylaman yeterli.</div>
             </form>
           </div>
         </div>
