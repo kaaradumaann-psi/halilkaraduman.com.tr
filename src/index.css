@@ -209,6 +209,9 @@ p{margin:0}
 }
 .cert-item h3{font-size:13px;margin:0;font-weight:600;letter-spacing:-.01em;line-height:1.35}
 .cert-year{margin-left:auto;color:var(--muted);font-size:11px;letter-spacing:.03em;flex:none}
+/* henüz eklenmemiş sertifika: uzun çizgi, soluk */
+.cert-item--empty .cert-mark{color:var(--muted)}
+.cert-empty-line{color:var(--muted);font-weight:400;letter-spacing:.08em}
 /* deneyim: sol kolonun yüksekliğine eşitlenir, satırlar eşit dağılır */
 .resume-block--experience{display:flex;flex-direction:column}
 .resume-block--experience .resume-list{flex:1;display:flex;flex-direction:column;justify-content:center}

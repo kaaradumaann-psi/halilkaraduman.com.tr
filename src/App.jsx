@@ -24,11 +24,12 @@ const SOCIALS = [
   },
 ]
 
-/* Sertifikalar — örnek liste; kendi sertifikalarınla güncelle. */
+/* Sertifikalar — henüz yok, kutular uzun çizgi olarak duruyor.
+   Sertifika ekleyince name ve year alanlarını doldur; kutu otomatik gerçek içeriğe döner. */
 const CERTS = [
-  { name: 'Klinik Görüşme Teknikleri Eğitimi', year: '2024' },
-  { name: 'Bilişsel Davranışçı Terapinin Temelleri', year: '2024' },
-  { name: 'SPSS ile Veri Analizi Eğitimi', year: '2023' },
+  { name: '', year: '' },
+  { name: '', year: '' },
+  { name: '', year: '' },
 ]
 
 export default function App(){
@@ -254,11 +255,11 @@ export default function App(){
               <div className="resume-block resume-block--certs">
                 <div className="resume-label">Sertifikalar</div>
                 <div className="cert-list">
-                  {CERTS.map(c => (
-                    <article className="cert-item" key={c.year + c.name}>
-                      <span className="cert-mark" aria-hidden="true">✓</span>
-                      <h3>{c.name}</h3>
-                      <span className="cert-year">{c.year}</span>
+                  {CERTS.map((c, i) => (
+                    <article className={`cert-item${c.name ? '' : ' cert-item--empty'}`} key={i}>
+                      <span className="cert-mark" aria-hidden="true">{c.name ? '✓' : '—'}</span>
+                      <h3 className={c.name ? undefined : 'cert-empty-line'} aria-label={c.name ? undefined : 'sertifika henüz yok'}>{c.name || '—'}</h3>
+                      {c.year ? <span className="cert-year">{c.year}</span> : null}
                     </article>
                   ))}
                 </div>
@@ -269,11 +270,11 @@ export default function App(){
               <div className="resume-label">Deneyim</div>
               <div className="resume-list">
                 <article className="resume-item">
-                  <div className="resume-period">Ekim 2024 — Kasım 2024</div>
+                  <div className="resume-period">Temmuz — Ağustos 2023</div>
                   <div className="resume-content">
                     <h3>Stajyer Psikolog</h3>
-                    <p className="resume-place">Gelişim Analiz Danışmanlık</p>
-                    <p className="resume-location">Karşıyaka, İzmir</p>
+                    <p className="resume-place">Gemlik Devlet Hastanesi</p>
+                    <p className="resume-location">Gemlik, Bursa</p>
                   </div>
                 </article>
                 <article className="resume-item">
@@ -285,11 +286,11 @@ export default function App(){
                   </div>
                 </article>
                 <article className="resume-item">
-                  <div className="resume-period">Temmuz — Ağustos 2023</div>
+                  <div className="resume-period">Ekim 2024 — Kasım 2024</div>
                   <div className="resume-content">
                     <h3>Stajyer Psikolog</h3>
-                    <p className="resume-place">Gemlik Devlet Hastanesi</p>
-                    <p className="resume-location">Gemlik, Bursa</p>
+                    <p className="resume-place">Gelişim Analiz Danışmanlık</p>
+                    <p className="resume-location">Karşıyaka, İzmir</p>
                   </div>
                 </article>
               </div>
