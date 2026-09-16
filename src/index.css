@@ -168,10 +168,9 @@ p{margin:0}
 
 /* ---------- 03 özgeçmiş ---------- */
 .resume-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch}
+/* sol kolon: Eğitim + Sertifikalar üst üste; toplam yükseklik Deneyim'e eşitlenir */
+.resume-col{display:flex;flex-direction:column;gap:16px}
 .resume-block{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:6px 20px 18px}
-/* Eğitim bloğu: kartlar Deneyim kutusuyla aynı genişlik ve yükseklikte */
-.resume-block--education{display:flex;flex-direction:column}
-.resume-block--education .resume-item--education{flex:1;align-items:center}
 .resume-label{
   padding:12px 0 7px;
   font-size:10px;letter-spacing:.12em;text-transform:uppercase;
@@ -195,6 +194,25 @@ p{margin:0}
 /* henüz yapılmamış eğitim: uzun çizgi, soluk */
 .resume-item--empty .resume-mark{color:var(--muted)}
 .resume-empty-line{color:var(--muted);font-weight:400;letter-spacing:.08em}
+/* sertifikalar: eğitim altında, deneyimle aynı uzunluğu dolduran kompakt kutular */
+.resume-block--certs{flex:1;display:flex;flex-direction:column}
+.cert-list{flex:1;display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.cert-item{
+  flex:1;display:flex;align-items:center;gap:12px;
+  background:var(--bg-soft);border:1px solid var(--border);border-radius:10px;
+  padding:8px 12px;
+}
+.cert-mark{
+  width:26px;height:26px;border-radius:8px;flex:none;
+  background:white;border:1px solid var(--border);
+  display:grid;place-items:center;font-size:12px;color:var(--soft);
+}
+.cert-item h3{font-size:13px;margin:0;font-weight:600;letter-spacing:-.01em;line-height:1.35}
+.cert-year{margin-left:auto;color:var(--muted);font-size:11px;letter-spacing:.03em;flex:none}
+/* deneyim: sol kolonun yüksekliğine eşitlenir, satırlar eşit dağılır */
+.resume-block--experience{display:flex;flex-direction:column}
+.resume-block--experience .resume-list{flex:1;display:flex;flex-direction:column;justify-content:center}
+.resume-block--experience .resume-item{flex:1;align-items:center}
 
 /* ---------- 04 iletişim ---------- */
 .contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:40px;align-items:start}

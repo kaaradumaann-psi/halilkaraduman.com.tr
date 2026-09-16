@@ -24,6 +24,13 @@ const SOCIALS = [
   },
 ]
 
+/* Sertifikalar — örnek liste; kendi sertifikalarınla güncelle. */
+const CERTS = [
+  { name: 'Klinik Görüşme Teknikleri Eğitimi', year: '2024' },
+  { name: 'Bilişsel Davranışçı Terapinin Temelleri', year: '2024' },
+  { name: 'SPSS ile Veri Analizi Eğitimi', year: '2023' },
+]
+
 export default function App(){
   const [open, setOpen] = useState(false)
   const [toast, setToast] = useState(null)
@@ -221,28 +228,44 @@ export default function App(){
           </div>
 
           <div className="resume-grid reveal">
-            <div className="resume-block resume-block--education">
-              <div className="resume-label">Eğitim</div>
-              <article className="resume-item resume-item--education">
-                <div className="resume-mark" aria-hidden="true">↗</div>
-                <div className="resume-content">
-                  <div className="resume-period">Lisans</div>
-                  <h3>Psikoloji</h3>
-                  <p className="resume-place">İzmir Bakırçay Üniversitesi</p>
-                </div>
-              </article>
+            <div className="resume-col">
+              <div className="resume-block">
+                <div className="resume-label">Eğitim</div>
+                <article className="resume-item resume-item--education">
+                  <div className="resume-mark" aria-hidden="true">↗</div>
+                  <div className="resume-content">
+                    <div className="resume-period">Lisans</div>
+                    <h3>Psikoloji</h3>
+                    <p className="resume-place">İzmir Bakırçay Üniversitesi</p>
+                  </div>
+                </article>
 
-              {/* Yüksek lisans henüz yok — yapmadığını belirtmek için uzun çizgi */}
-              <article className="resume-item resume-item--education resume-item--empty">
-                <div className="resume-mark" aria-hidden="true">—</div>
-                <div className="resume-content">
-                  <div className="resume-period">Yüksek Lisans</div>
-                  <h3 className="resume-empty-line" aria-label="henüz yok">—</h3>
+                {/* Yüksek lisans henüz yok — yapmadığını belirtmek için uzun çizgi */}
+                <article className="resume-item resume-item--education resume-item--empty">
+                  <div className="resume-mark" aria-hidden="true">—</div>
+                  <div className="resume-content">
+                    <div className="resume-period">Yüksek Lisans</div>
+                    <h3 className="resume-empty-line" aria-label="henüz yok">—</h3>
+                  </div>
+                </article>
+              </div>
+
+              {/* Sertifikalar — örnek liste; kendi sertifikalarınla güncelle. */}
+              <div className="resume-block resume-block--certs">
+                <div className="resume-label">Sertifikalar</div>
+                <div className="cert-list">
+                  {CERTS.map(c => (
+                    <article className="cert-item" key={c.year + c.name}>
+                      <span className="cert-mark" aria-hidden="true">✓</span>
+                      <h3>{c.name}</h3>
+                      <span className="cert-year">{c.year}</span>
+                    </article>
+                  ))}
                 </div>
-              </article>
+              </div>
             </div>
 
-            <div className="resume-block">
+            <div className="resume-block resume-block--experience">
               <div className="resume-label">Deneyim</div>
               <div className="resume-list">
                 <article className="resume-item">
