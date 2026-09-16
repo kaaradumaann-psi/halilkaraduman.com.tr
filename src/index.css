@@ -42,8 +42,6 @@ p{margin:0}
 .nav-inner{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;gap:16px}
 .logo{font-family:"Newsreader",serif;font-size:18px;letter-spacing:-.03em;font-weight:400}
 .logo span{font-weight:300}
-.logo i{font-style:italic;font-weight:300}
-.logo-dot{width:4px;height:4px;background:var(--text);border-radius:50%;display:inline-block;margin-left:3px;opacity:.25}
 .nav-links{display:flex;align-items:center;gap:22px}
 .nav-link{font-size:13px;color:var(--soft);transition:color .15s}
 .nav-link:hover{color:var(--text)}
@@ -109,6 +107,7 @@ p{margin:0}
 .about b{color:var(--text)}
 
 /* sections - sade, ortali, tek kolon */
+.about,.section{scroll-margin-top:calc(var(--nav-h) + 16px)}
 .section{padding:36px 0;border-top:1px solid var(--border)}
 .section-head{text-align:center;max-width:520px;margin:0 auto 22px}
 .section-num{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
