@@ -1,1 +1,34 @@
-# halilkaraduman.com.tr
+# halilkaraduman.com.tr — Psikolog Web Sitesi (Sade)
+
+**Psikolog Halil Karaduman** — yeni mezun, teknolojiyle psikolojiyi birleştiren sade portfolyo. **nadirmermer.com** referans alınarak **React + Vite** ile tasarlandı (birebir kopya değil, aynı minimal-editoryal dilde yorum).
+
+> Yeni mezun vurgusu: gösterişsiz, dürüst, öğrenmeye açık. Komplex detaylar çıkarıldı, 4 bölümde sade akış: Hakkımda → Çalışmalar → Özgeçmiş (bilerek boş) → İletişim.
+
+## Bölümler
+- **Hero** — “Psikoloji ile teknolojiyi aynı masada buluşturuyorum.” Kicker: *Yeni Mezun • Psikolog & Geliştirici*, sade portre, 2 CTA
+- **01 / Çalışmalar** — Sadece 2 kart: **MMPI Değerlendirme Aracı** (featured, koyu) + *Yeni fikirler yolda* dashed placeholder. MMPI butonu var ama **henüz pasif** — tıklayınca toast: “Çok yakında”.
+- **02 / Özgeçmiş** — **Bilerek boş.** Dashed empty-state: “Henüz içerik yok — yakında güncellenecek.”
+- **03 / İletişim** — Sol koyu panel (e-posta/konum) + sağ 3 alanlı form (Ad/E-posta/Mesaj), toast bildirim, 2 sosyal ikon (yakında)
+
+- Responsive hamburger, sticky blurred nav, smooth scroll, reveal animasyon, toast
+- Tipografi: `DM Sans` + `Newsreader`, palet: `#FDFCF9` / `#111113` / `#C2B5A3`
+- Vanilla CSS (`src/index.css` içinde tasarım sistemi)
+
+## Çalıştırma
+```bash
+npm install
+npm run dev    # http://localhost:5173
+npm run build
+npm run preview
+```
+
+## Yapı
+```
+src/App.jsx      # sade tek sayfa
+src/index.css    # tüm stiller
+public/favicon.svg
+vite.config.js   # host 0.0.0.0 + allowedHosts true (Arena preview uyumlu)
+```
+
+## Not
+nadirmermer.com’un ruhu (ekru zemin, ince border, yuvarlatılmış kartlar, numaralı başlıklar) korunup içerik Halil’in yeni mezun kimliğine göre sadeleştirildi. MMPI yönlendirmesi hazır ama disabled; aktif etmek için tek satır yeterli.
