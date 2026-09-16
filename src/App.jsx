@@ -24,13 +24,19 @@ const SOCIALS = [
   },
 ]
 
-/* Sertifikalar — henüz yok, kutular uzun çizgi olarak duruyor.
-   Sertifika ekleyince name ve year alanlarını doldur; kutu otomatik gerçek içeriğe döner. */
+/*
+  Sertifikalar — henüz yok; kutular uzun çizgi (placeholder) olarak duruyor.
+  Sertifika ekleyince name ve year alanlarını doldur; kutu otomatik ✓ işaretli
+  gerçek sertifikaya döner. Kutu sayısını da buradan yönetebilirsin.
+*/
 const CERTS = [
   { name: '', year: '' },
   { name: '', year: '' },
   { name: '', year: '' },
 ]
+
+/* Kişi fotoğrafı adayları: ilk bulunan kullanılır (public klasörüne konur). */
+const PHOTO_SOURCES = ['/foto.jpg', '/foto.png', '/foto.webp']
 
 export default function App(){
   const [open, setOpen] = useState(false)
@@ -41,7 +47,6 @@ export default function App(){
   // Hiçbiri yoksa stok fotoğraf/isim yazısı yerine HK monoğramlı yedek daire gösterilir.
   const [photoIdx, setPhotoIdx] = useState(0)
   const [photoFailed, setPhotoFailed] = useState(false)
-  const PHOTO_SOURCES = ['/foto.jpg', '/foto.png', '/foto.webp']
 
   const go = id => {
     const target = document.querySelector(id)
@@ -113,10 +118,10 @@ export default function App(){
             {/* Kullanıcının kendi logosu */}
             <img src="/logo-mark.png" alt="Halil Karaduman — Psikolog" className="logo-img" />
           </a>
-          <button className="mobile-toggle" onClick={() => setOpen(v => !v)} aria-label="menü">
+          <button className="mobile-toggle" onClick={() => setOpen(v => !v)} aria-label="menü" aria-expanded={open} aria-controls="nav-links">
             <div className="hamburger"><span style={{ transform: open ? 'translateY(5px) rotate(45deg)' : 'none' }} /><span style={{ opacity: open ? 0 : 1 }} /><span style={{ transform: open ? 'translateY(-5px) rotate(-45deg)' : 'none' }} /></div>
           </button>
-          <div className={`nav-links ${open ? 'open' : ''}`}>
+          <div id="nav-links" className={`nav-links ${open ? 'open' : ''}`}>
             <a href="#hakkimda" className="nav-link" onClick={e => { e.preventDefault(); go('#hakkimda') }}>Hakkımda</a>
             <a href="#calismalar" className="nav-link" onClick={e => { e.preventDefault(); go('#calismalar') }}>Çalışmalar</a>
             <a href="#ozgecmis" className="nav-link" onClick={e => { e.preventDefault(); go('#ozgecmis') }}>Özgeçmiş</a>
@@ -183,7 +188,7 @@ export default function App(){
             <div className="section-num">01 — Hakkımda</div>
             <h2 className="section-title">Kendimi <em>tanıtayım</em></h2>
           </div>
-          <div className="about-grid reveal">
+          <div className="reveal">
             <h3 className="about-statement">
               İnsanı anlama <em>merakım</em>, kodun problem çözme gücüyle aynı amaçta buluşuyor: sahiden işe yarayan, sade ve güvenilir araçlar.
             </h3>
@@ -263,7 +268,7 @@ export default function App(){
                 </article>
               </div>
 
-              {/* Sertifikalar — örnek liste; kendi sertifikalarınla güncelle. */}
+              {/* Sertifikalar — CERTS dizisi boş olduğu için çizgi placeholder'lar */}
               <div className="resume-block resume-block--certs">
                 <div className="resume-label">Sertifikalar</div>
                 <div className="cert-list">

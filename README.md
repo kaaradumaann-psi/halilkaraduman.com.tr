@@ -5,7 +5,7 @@ React + Vite ile hazırlanmış, Cloudflare Workers Static Assets üzerinde yay�
 ## Hedef mimari
 
 ```text
-GitHub: halilkaradumaan/psikolog
+GitHub: kaaradumaann-psi/halilkaraduman.com.tr
         ↓
 Cloudflare Workers + Static Assets
         ↓
@@ -24,11 +24,22 @@ Sitedeki HTML, CSS ve JavaScript dosyaları `dist/` klasöründen Static Assets 
 
 ## Sitede bulunan bölümler
 
-- **Hero** — Halil Karaduman, Psikolog & Geliştirici
-- **01 / Çalışmalar** — MMPI değerlendirme aracı için hazırlanan çalışma kartı
-- **02 / Özgeçmiş** — İzmir Bakırçay Üniversitesi Psikoloji lisans eğitimi; Gelişim Analiz Danışmanlık ve Gemlik Devlet Hastanesi staj deneyimleri
-- **03 / İletişim** — Ad, e-posta ve mesaj alanlarından oluşan çalışan iletişim formu
+- **Hero** — ortalı karşılama; kişi fotoğrafı (`public/foto.jpg|png|webp`), fotoğraf yoksa HK monoğramlı yedek daire; sosyal medya butonları
+- **01 / Hakkımda** — kısa tanıtım, eğitim/konum/odak künyesi
+- **02 / Çalışmalar** — MMPI değerlendirme aracı için hazırlanan çalışma kartı
+- **03 / Özgeçmiş** — Eğitim (Lisans + boş Yüksek Lisans satırı), Sertifikalar (placeholder kutular) ve tarihsel sıralı staj deneyimleri
+- **04 / İletişim** — e-posta kartı ve ad/e-posta/mesaj alanlarından oluşan çalışan iletişim formu
+- **Footer** — sosyal medya ikonları ve telif satırı
 - Responsive menü, doğru bölüm navigasyonu, smooth scroll, reveal animasyonları ve toast bildirimleri
+
+## İçeriği özelleştirme
+
+| Ne | Nerede | Not |
+| --- | --- | --- |
+| Sosyal medya linkleri | `src/App.jsx` → `SOCIALS` | Hero ve footer birlikte güncellenir |
+| Sertifikalar | `src/App.jsx` → `CERTS` | `name` ve `year` doldurulunca kutu gerçek içeriğe döner |
+| Kişi fotoğrafı | `public/foto.jpg` (veya `.png`/`.webp`) | Eklenince yedek monoğram otomatik kaybolur |
+| Logolar | `public/logo-mark.png` (nav), `public/logo-full.png` (sosyal önizleme) | Orijinal görsel kökte yedekli |
 
 ## Dosya yapısı
 
@@ -202,7 +213,7 @@ Manuel `npm run deploy` çalıştırmak yerine Cloudflare Workers Builds ile Git
 2. **Settings → Builds** bölümüne gir.
 3. **Connect** seçeneğine bas.
 4. GitHub hesabını yetkilendir.
-5. `halilkaradumaan/psikolog` repository'sini seç.
+5. `kaaradumaann-psi/halilkaraduman.com.tr` repository'sini seç.
 6. Production branch olarak `main` seç.
 7. Ayarları şöyle gir:
 
