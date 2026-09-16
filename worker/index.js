@@ -2,6 +2,34 @@ const defaultRecipient = 'contact@halilkaraduman.com.tr'
 const defaultSender = 'Halil Karaduman <website@halilkaraduman.com.tr>'
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+// Güvenlik sınırları
+const MAX_BODY_BYTES = 32 * 1024 // Tek istek gövdesi için üst sınır
+const RATE_LIMIT_MAX = 5         // IP başına izin verilen istek sayısı
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000 // 10 dakikalık pencere
+
+// En iyi çaba (best-effort) hız sınırı: Worker izolasyonu ayakta kaldığı sürece geçerlidir;
+// kalıcı depolama yerine geçmez. Cloudflare WAF/Rate Limiting kurallarıyla birlikte düşünülür.
+const rateBuckets = new Map()
+
+function isRateLimited(ip) {
+  const now = Date.now()
+  const bucket = rateBuckets.get(ip)
+
+  if (!bucket || now > bucket.resetAt) {
+    // Pencere dışında kalan eski kayıtları temizle (Map gereksiz büyümesin).
+    if (rateBuckets.size > 5000) {
+      for (const [key, value] of rateBuckets) {
+        if (now > value.resetAt) rateBuckets.delete(key)
+      }
+    }
+    rateBuckets.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS })
+    return false
+  }
+
+  bucket.count += 1
+  return bucket.count > RATE_LIMIT_MAX
+}
+
 const json = (body, status = 200) => new Response(JSON.stringify(body), {
   status,
   headers: {
@@ -29,6 +57,18 @@ async function handleContact(request, env) {
 
   if (request.method !== 'POST') {
     return json({ ok: false, message: 'Bu endpoint yalnızca POST kabul eder.' }, 405)
+  }
+
+  // Aşırı büyük istekleri gövdeyi okumadan reddet.
+  const contentLength = Number(request.headers.get('Content-Length') || '0')
+  if (contentLength > MAX_BODY_BYTES) {
+    return json({ ok: false, message: 'İstek çok büyük.' }, 413)
+  }
+
+  // Basit spam koruması: IP başına pencere içi istek sayısını sınırla.
+  const clientIp = request.headers.get('CF-Connecting-IP') || 'bilinmeyen'
+  if (isRateLimited(clientIp)) {
+    return json({ ok: false, message: 'Çok fazla deneme. Lütfen biraz sonra tekrar dene.' }, 429)
   }
 
   let payload
