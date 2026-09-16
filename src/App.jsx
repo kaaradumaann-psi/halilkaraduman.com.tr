@@ -35,7 +35,7 @@ export default function App(){
             <a href="#calismalar" className="nav-link" onClick={e=>{e.preventDefault();go('#calismalar')}}>Çalışmalar</a>
             <a href="#ozgecmis" className="nav-link" onClick={e=>{e.preventDefault();go('#ozgecmis')}}>Özgeçmiş</a>
             <a href="#iletisim" className="nav-link" onClick={e=>{e.preventDefault();go('#iletisim')}}>İletişim</a>
-            <a href="#iletisim" className="nav-cta" onClick={e=>{e.preventDefault();go('#iletisim')}}>İletişim</a>
+            <a href="#iletisim" className="nav-cta" onClick={e=>{e.preventDefault();go('#iletisim')}}>Mesaj Gönder</a>
           </div>
         </div>
       </nav>
@@ -66,7 +66,7 @@ export default function App(){
           </div>
 
           <div id="hakkimda" className="about reveal">
-            Psikoloji eğitimimde sahada işe yarayan sade araçlara olan ihtiyacı gördüm. Yazılımı amaç değil, <b>insan odaklı bir köprü</b> olarak görüyorum — bilimsel, gizliliğe saygılı, klinisyenin dilinden.
+            İnsanı anlama merakı ile kodun problem çözme gücünü <b>tek bir amaçta</b> buluşturuyorum. Sahada sahiden işe yarayan, sade ve güvenilir dijital araçlara ihtiyaç olduğunu gördüm — yazılımı amaç değil, insan odaklı bir köprü olarak kuruyorum.
           </div>
         </div>
       </section>
