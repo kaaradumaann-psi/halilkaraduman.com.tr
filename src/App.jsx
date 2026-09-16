@@ -46,9 +46,10 @@ export default function App(){
           <div className="reveal">
             <div className="kicker"><span className="kicker-dot"/> Psikolog & Geliştirici</div>
             <h1>
-              İnsanı anlamaya<br/>
-              dair <em>merakımı</em><br/>
-              koda <strong>dönüştürüyorum.</strong>
+              Anlamak için<br/>
+              <em>dinlerim,</em><br/>
+              kolaylaştırmak için<br/>
+              <strong>tasarlarım.</strong>
             </h1>
             <p className="hero-sub">
               <strong>Halil Karaduman</strong> — psikoloji bilimini daha sade ve güvenilir kılmak için dijital araçlar üzerine çalışıyorum. Klinik doğruluk ve gizlilik her şeyden önce.
