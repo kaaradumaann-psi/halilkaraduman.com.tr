@@ -123,7 +123,6 @@ export default function App(){
             <a href="#calismalar" className="nav-link" onClick={e => { e.preventDefault(); go('#calismalar') }}>Çalışmalar</a>
             <a href="#ozgecmis" className="nav-link" onClick={e => { e.preventDefault(); go('#ozgecmis') }}>Özgeçmiş</a>
             <a href="#iletisim" className="nav-link" onClick={e => { e.preventDefault(); go('#iletisim') }}>İletişim</a>
-            <a href="#iletisim" className="nav-cta" onClick={e => { e.preventDefault(); go('#iletisim') }}>Mesaj Gönder</a>
           </div>
         </div>
       </nav>
