@@ -41,7 +41,7 @@ p{margin:0}
 }
 .nav-inner{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;gap:16px}
 
-/* logo: kullanıcının kendi HK monoğramı (public/logo.png) */
+/* logo: kullanıcının kendi HK monoğramı (public/logo-mark.png) */
 .logo{display:inline-flex;align-items:center}
 .logo-img{height:42px;width:auto}
 
@@ -69,8 +69,14 @@ p{margin:0}
   .mobile-toggle{display:block}
 }
 
-/* ---------- HERO - sade ortalı ---------- */
-.hero{padding:48px 0 32px;text-align:center}
+/* ---------- HERO - solda metin, sağda fotoğraf ---------- */
+.hero{padding:56px 0 40px}
+.hero-grid{
+  width:min(960px, 100% - 40px);margin-inline:auto;
+  display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;
+}
+@media(max-width:600px){.hero-grid{width:min(960px, 100% - 32px)}}
+.hero-copy{text-align:left}
 .kicker{
   display:inline-flex;align-items:center;gap:7px;
   font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
@@ -85,21 +91,9 @@ p{margin:0}
 }
 .hero h1 em{font-style:italic;font-weight:300}
 .hero h1 strong{font-weight:400}
-
-/* başlığın hemen altında: metin + küçük yuvarlak fotoğraf yan yana */
-.hero-row{
-  display:flex;align-items:center;justify-content:center;
-  gap:28px;flex-wrap:wrap;margin-top:18px;
-}
-.hero-sub{max-width:520px;color:var(--soft);font-size:15px;line-height:1.65;text-align:center}
+.hero-sub{max-width:460px;margin:16px 0 0;color:var(--soft);font-size:15px;line-height:1.65}
 .hero-sub strong{color:var(--text);font-weight:600}
-.hero-photo{flex:none}
-.hero-photo img{
-  width:148px;height:148px;border-radius:50%;object-fit:cover;
-  border:1px solid var(--border);padding:3px;background:white;
-}
-
-.hero-actions{margin-top:22px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.hero-actions{margin-top:22px;display:flex;gap:10px;justify-content:flex-start;flex-wrap:wrap}
 .btn-primary{
   display:inline-flex;align-items:center;gap:6px;
   background:var(--text);color:white;border:1px solid var(--text);
@@ -116,7 +110,7 @@ p{margin:0}
 .btn-ghost:hover{border-color:var(--text)}
 
 /* küçük sosyal logo butonları — tıklayınca yönlendirir */
-.socials{display:flex;gap:10px;margin-top:24px;justify-content:center}
+.socials{display:flex;gap:10px;margin-top:24px;justify-content:flex-start}
 .social-btn{
   width:38px;height:38px;border-radius:50%;
   border:1px solid var(--border);background:white;
@@ -124,6 +118,14 @@ p{margin:0}
   transition:all .15s;
 }
 .social-btn:hover{color:var(--text);border-color:var(--text);transform:translateY(-2px)}
+
+/* sağ kolon: 4:5 fotoğraf, ortalı ve zarif */
+.hero-photo{justify-self:center;width:min(100%,320px)}
+.hero-photo img{
+  width:100%;aspect-ratio:4/5;object-fit:cover;
+  border-radius:24px;border:1px solid var(--border);
+  box-shadow:0 24px 60px rgba(0,0,0,.10);
+}
 
 /* ---------- bölümler - sade, ortalı ---------- */
 .section{padding:40px 0;border-top:1px solid var(--border);scroll-margin-top:calc(var(--nav-h) + 16px)}
@@ -247,6 +249,8 @@ p{margin:0}
 /* ---------- responsive ---------- */
 @media(max-width:760px){
   .hero{padding-top:40px}
+  .hero-grid{grid-template-columns:1fr;gap:36px}
+  .hero-photo{width:min(100%,340px)}
   .resume-grid{grid-template-columns:1fr}
   .contact-grid{grid-template-columns:1fr;gap:30px}
   .about-body p{text-align:left}
@@ -256,5 +260,4 @@ p{margin:0}
   .resume-item:not(.resume-item--education){grid-template-columns:1fr;gap:5px}
   .resume-period{padding-top:0}
   .form-wrap{padding:18px}
-  .hero-photo img{width:124px;height:124px}
 }
