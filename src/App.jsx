@@ -120,10 +120,10 @@ export default function App(){
         </div>
       </nav>
 
-      {/* HERO — solda metin, sağda fotoğraf */}
+      {/* HERO — ortalı: başlık üstte, altında yuvarlak fotoğraf, sonra paragraf + butonlar */}
       <section className="hero">
-        <div className="hero-grid">
-          <div className="hero-copy reveal">
+        <div className="container">
+          <div className="reveal">
             <div className="kicker"><span className="kicker-dot" /> Psikolog &amp; Geliştirici</div>
             <h1>
               Anlamak için<br />
@@ -131,6 +131,9 @@ export default function App(){
               kolaylaştırmak için<br />
               <strong>tasarlarım.</strong>
             </h1>
+            <div className="avatar-wrap">
+              <img className="avatar" src={PHOTO_SOURCES[photoIdx]} alt="Halil Karaduman" onError={() => setPhotoIdx(i => Math.min(i + 1, PHOTO_SOURCES.length - 1))} />
+            </div>
             <p className="hero-sub">
               <strong>Halil Karaduman</strong> — psikoloji bilimini daha sade ve güvenilir kılmak için dijital araçlar üzerine çalışıyorum. Klinik doğruluk ve gizlilik her şeyden önce.
             </p>
@@ -149,9 +152,6 @@ export default function App(){
                 </a>
               ))}
             </div>
-          </div>
-          <div className="hero-photo reveal">
-            <img src={PHOTO_SOURCES[photoIdx]} alt="Halil Karaduman" onError={() => setPhotoIdx(i => Math.min(i + 1, PHOTO_SOURCES.length - 1))} />
           </div>
         </div>
       </section>
@@ -229,6 +229,15 @@ export default function App(){
                   <div className="resume-period">Lisans</div>
                   <h3>Psikoloji</h3>
                   <p className="resume-place">İzmir Bakırçay Üniversitesi</p>
+                </div>
+              </article>
+
+              {/* Yüksek lisans henüz yok — yapmadığını belirtmek için uzun çizgi */}
+              <article className="resume-item resume-item--education resume-item--empty">
+                <div className="resume-mark" aria-hidden="true">—</div>
+                <div className="resume-content">
+                  <div className="resume-period">Yüksek Lisans</div>
+                  <h3 className="resume-empty-line" aria-label="henüz yok">—</h3>
                 </div>
               </article>
             </div>
