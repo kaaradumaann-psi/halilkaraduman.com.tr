@@ -221,7 +221,7 @@ export default function App(){
           </div>
 
           <div className="resume-grid reveal">
-            <div className="resume-block">
+            <div className="resume-block resume-block--education">
               <div className="resume-label">Eğitim</div>
               <article className="resume-item resume-item--education">
                 <div className="resume-mark" aria-hidden="true">↗</div>

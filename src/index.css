@@ -167,8 +167,11 @@ p{margin:0}
 .hint{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:8px}
 
 /* ---------- 03 özgeçmiş ---------- */
-.resume-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:16px;align-items:start}
+.resume-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch}
 .resume-block{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:6px 20px 18px}
+/* Eğitim bloğu: kartlar Deneyim kutusuyla aynı genişlik ve yükseklikte */
+.resume-block--education{display:flex;flex-direction:column}
+.resume-block--education .resume-item--education{flex:1;align-items:center}
 .resume-label{
   padding:12px 0 7px;
   font-size:10px;letter-spacing:.12em;text-transform:uppercase;
