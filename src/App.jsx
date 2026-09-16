@@ -29,6 +29,13 @@ export default function App(){
   const [toast, setToast] = useState(null)
   const [form, setForm] = useState({ ad: '', email: '', mesaj: '', website: '' })
   const [sending, setSending] = useState(false)
+  // Kişi fotoğrafı: public/foto.(jpg|png|webp) commit'lenince otomatik devreye girer,
+  // yoksa geçici placeholder gösterilir.
+  const [photoIdx, setPhotoIdx] = useState(0)
+  const PHOTO_SOURCES = [
+    '/foto.jpg', '/foto.png', '/foto.webp',
+    'https://images.unsplash.com/photo-1556157388-97ed244727b5?auto=format&fit=crop&w=900&q=80',
+  ]
 
   const go = id => {
     const target = document.querySelector(id)
@@ -143,7 +150,7 @@ export default function App(){
             </div>
           </div>
           <div className="hero-photo reveal">
-            <img src="https://images.unsplash.com/photo-1556157388-97ed244727b5?auto=format&fit=crop&w=900&q=80" alt="Halil Karaduman" />
+            <img src={PHOTO_SOURCES[photoIdx]} alt="Halil Karaduman" onError={() => setPhotoIdx(i => Math.min(i + 1, PHOTO_SOURCES.length - 1))} />
           </div>
         </div>
       </section>
