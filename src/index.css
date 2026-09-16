@@ -205,6 +205,10 @@ p{margin:0}
 /* henüz eklenmemiş sertifika: uzun çizgi, soluk */
 .cert-item--empty .cert-mark{color:var(--muted)}
 .cert-empty-line{color:var(--muted);font-weight:400;letter-spacing:.08em}
+/* deneyim: sol kolonun yüksekliğine eşitlenir, satırlar eşit dağılır */
+.resume-block--experience{display:flex;flex-direction:column}
+.resume-block--experience .resume-list{flex:1;display:flex;flex-direction:column;justify-content:center}
+.resume-block--experience .resume-item{flex:1;align-items:center}
 
 /* ---------- 04 iletişim ---------- */
 .contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:40px;align-items:start}
