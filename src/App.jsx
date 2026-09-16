@@ -127,14 +127,58 @@ export default function App(){
         </div>
       </section>
 
-      {/* 02 — boş */}
+      {/* 02 */}
       <section id="ozgecmis" className="section">
         <div className="container">
           <div className="section-head reveal">
             <div className="section-num">02 — Özgeçmiş</div>
             <h2 className="section-title">Deneyim & <em>eğitim</em></h2>
+            <p className="section-desc">Psikoloji eğitimim ve sahadaki staj deneyimlerim.</p>
           </div>
-          <div className="empty reveal">Bu alan yakında güncellenecek.</div>
+
+          <div className="resume reveal">
+            <div className="resume-block">
+              <div className="resume-label">Eğitim</div>
+              <article className="resume-item resume-item--education">
+                <div className="resume-mark" aria-hidden="true">↗</div>
+                <div className="resume-content">
+                  <div className="resume-period">Lisans</div>
+                  <h3>Psikoloji</h3>
+                  <p className="resume-place">İzmir Bakırçay Üniversitesi</p>
+                </div>
+              </article>
+            </div>
+
+            <div className="resume-block">
+              <div className="resume-label">Deneyim</div>
+              <div className="resume-list">
+                <article className="resume-item">
+                  <div className="resume-period">Ekim — Kasım</div>
+                  <div className="resume-content">
+                    <h3>Stajyer Psikolog</h3>
+                    <p className="resume-place">Gelişim Analiz Danışmanlık Şirketi</p>
+                    <p className="resume-location">Karşıyaka, İzmir</p>
+                  </div>
+                </article>
+                <article className="resume-item">
+                  <div className="resume-period">Temmuz — Ağustos 2024</div>
+                  <div className="resume-content">
+                    <h3>Stajyer Psikolog</h3>
+                    <p className="resume-place">Gemlik Devlet Hastanesi</p>
+                    <p className="resume-location">Gemlik, Bursa</p>
+                  </div>
+                </article>
+                <article className="resume-item">
+                  <div className="resume-period">Temmuz — Ağustos 2023</div>
+                  <div className="resume-content">
+                    <h3>Stajyer Psikolog</h3>
+                    <p className="resume-place">Gemlik Devlet Hastanesi</p>
+                    <p className="resume-location">Gemlik, Bursa</p>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

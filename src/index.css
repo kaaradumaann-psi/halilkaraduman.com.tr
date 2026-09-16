@@ -138,12 +138,46 @@ p{margin:0}
 .btn-full:hover{background:#1a1a1a}
 .hint{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:8px}
 
-/* empty - dashed */
-.empty{
+/* resume - eğitim ve deneyim */
+.resume{
   max-width:520px;margin:0 auto;
-  border:1px dashed var(--border);border-radius:var(--radius);
-  padding:28px 20px;text-align:center;background:var(--bg-soft);
-  color:var(--muted);font-size:13.5px;
+  background:white;border:1px solid var(--border);border-radius:var(--radius);
+  padding:4px 20px 18px;
+}
+.resume-block + .resume-block{border-top:1px solid var(--border);margin-top:8px;padding-top:2px}
+.resume-label{
+  padding:12px 0 7px;
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;
+}
+.resume-item{
+  display:grid;grid-template-columns:145px minmax(0,1fr);gap:18px;
+  padding:15px 0;
+}
+.resume-list .resume-item + .resume-item{border-top:1px solid var(--border)}
+.resume-period{
+  color:var(--muted);font-size:11px;line-height:1.45;
+  letter-spacing:.03em;padding-top:2px;
+}
+.resume-content h3{font-size:15px;line-height:1.3;letter-spacing:-.02em;margin:0 0 4px;font-weight:600}
+.resume-place{font-size:13px;line-height:1.5;color:var(--soft);margin:0}
+.resume-location{
+  color:var(--muted);font-size:10px;line-height:1.4;
+  letter-spacing:.08em;text-transform:uppercase;margin:5px 0 0;
+}
+.resume-item--education{
+  grid-template-columns:34px minmax(0,1fr);gap:12px;
+  padding:14px 13px;background:var(--bg-soft);border:1px solid var(--border);border-radius:10px;
+}
+.resume-mark{
+  width:30px;height:30px;border-radius:8px;display:grid;place-items:center;
+  background:white;border:1px solid var(--border);font-size:14px;color:var(--text);
+}
+
+@media(max-width:520px){
+  .resume{padding-inline:16px}
+  .resume-item:not(.resume-item--education){grid-template-columns:1fr;gap:5px}
+  .resume-period{padding-top:0}
 }
 
 /* form - sade */

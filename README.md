@@ -2,12 +2,12 @@
 
 **Psikolog Halil Karaduman** — yeni mezun, teknolojiyle psikolojiyi birleştiren sade portfolyo. **nadirmermer.com** referans alınarak **React + Vite** ile tasarlandı (birebir kopya değil, aynı minimal-editoryal dilde yorum).
 
-> Yeni mezun vurgusu: gösterişsiz, dürüst, öğrenmeye açık. Komplex detaylar çıkarıldı, 4 bölümde sade akış: Hakkımda → Çalışmalar → Özgeçmiş (bilerek boş) → İletişim.
+> Yeni mezun vurgusu: gösterişsiz, dürüst, öğrenmeye açık. Komplex detaylar çıkarıldı, 4 bölümde sade akış: Hakkımda → Çalışmalar → Özgeçmiş → İletişim.
 
 ## Bölümler
 - **Hero** — “Psikoloji ile teknolojiyi aynı masada buluşturuyorum.” Kicker: *Yeni Mezun • Psikolog & Geliştirici*, sade portre, 2 CTA
 - **01 / Çalışmalar** — Sadece 2 kart: **MMPI Değerlendirme Aracı** (featured, koyu) + *Yeni fikirler yolda* dashed placeholder. MMPI butonu var ama **henüz pasif** — tıklayınca toast: “Çok yakında”.
-- **02 / Özgeçmiş** — **Bilerek boş.** Dashed empty-state: “Henüz içerik yok — yakında güncellenecek.”
+- **02 / Özgeçmiş** — İzmir Bakırçay Üniversitesi Psikoloji lisans eğitimi ve Gelişim Analiz Danışmanlık Şirketi ile Gemlik Devlet Hastanesi staj deneyimleri.
 - **03 / İletişim** — Sol koyu panel (e-posta/konum) + sağ 3 alanlı form (Ad/E-posta/Mesaj), toast bildirim, 2 sosyal ikon (yakında)
 
 - Responsive hamburger, sticky blurred nav, smooth scroll, reveal animasyon, toast
