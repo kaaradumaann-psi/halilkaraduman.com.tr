@@ -120,10 +120,10 @@ export default function App(){
         </div>
       </nav>
 
-      {/* HERO — solda metin, sağda fotoğraf */}
+      {/* HERO — ortalı; başlık altında metin + küçük fotoğraf yan yana */}
       <section className="hero">
-        <div className="container hero-grid">
-          <div className="hero-copy reveal">
+        <div className="container">
+          <div className="reveal">
             <div className="kicker"><span className="kicker-dot" /> Psikolog &amp; Geliştirici</div>
             <h1>
               Anlamak için<br />
@@ -131,9 +131,14 @@ export default function App(){
               kolaylaştırmak için<br />
               <strong>tasarlarım.</strong>
             </h1>
-            <p className="hero-sub">
-              <strong>Halil Karaduman</strong> — psikoloji bilimini daha sade ve güvenilir kılmak için dijital araçlar üzerine çalışıyorum. Klinik doğruluk ve gizlilik her şeyden önce.
-            </p>
+            <div className="hero-row">
+              <p className="hero-sub">
+                <strong>Halil Karaduman</strong> — psikoloji bilimini daha sade ve güvenilir kılmak için dijital araçlar üzerine çalışıyorum. Klinik doğruluk ve gizlilik her şeyden önce.
+              </p>
+              <div className="hero-photo">
+                <img src={PHOTO_SOURCES[photoIdx]} alt="Halil Karaduman" onError={() => setPhotoIdx(i => Math.min(i + 1, PHOTO_SOURCES.length - 1))} />
+              </div>
+            </div>
             <div className="hero-actions">
               <button className="btn-primary" onClick={() => go('#calismalar')}>
                 Çalışmalara göz at
@@ -149,9 +154,6 @@ export default function App(){
                 </a>
               ))}
             </div>
-          </div>
-          <div className="hero-photo reveal">
-            <img src={PHOTO_SOURCES[photoIdx]} alt="Halil Karaduman" onError={() => setPhotoIdx(i => Math.min(i + 1, PHOTO_SOURCES.length - 1))} />
           </div>
         </div>
       </section>
