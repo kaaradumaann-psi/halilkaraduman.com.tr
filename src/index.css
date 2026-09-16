@@ -247,8 +247,11 @@ p{margin:0}
 .form-note b{color:var(--soft)}
 
 /* ---------- footer ---------- */
-.footer{border-top:1px solid var(--border);padding:28px 0;text-align:center;color:var(--muted);font-size:12.5px}
+.footer{border-top:1px solid var(--border);padding:30px 0;text-align:center;color:var(--muted);font-size:12.5px}
+.footer-inner{display:flex;flex-direction:column;align-items:center;gap:16px}
+.footer-socials{margin-top:0}
 .footer b{color:var(--text);font-family:"Newsreader",serif;font-weight:400}
+.footer-line{line-height:1.6}
 
 /* ---------- reveal ---------- */
 .reveal{opacity:0;transform:translateY(8px);transition:all .5s ease}

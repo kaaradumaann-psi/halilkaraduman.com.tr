@@ -330,8 +330,18 @@ export default function App(){
       </section>
 
       <footer className="footer">
-        <div className="container">
-          Psikolog &amp; Geliştirici · © {new Date().getFullYear()} halilkaraduman.com.tr
+        <div className="container footer-inner">
+          {/* sosyal logo butonları — tıklayınca yönlendirir */}
+          <div className="socials footer-socials">
+            {SOCIALS.map(s => (
+              <a key={s.id} className="social-btn" href={s.url} target="_blank" rel="noreferrer" aria-label={s.label} title={s.label}>
+                <svg width="16" height="16" viewBox={s.vb} fill="currentColor" aria-hidden="true"><path d={s.path} /></svg>
+              </a>
+            ))}
+          </div>
+          <div className="footer-line">
+            <b>Halil Karaduman</b> · Psikolog &amp; Geliştirici · © {new Date().getFullYear()} halilkaraduman.com.tr
+          </div>
         </div>
       </footer>
 
