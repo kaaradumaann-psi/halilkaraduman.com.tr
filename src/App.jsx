@@ -35,7 +35,7 @@ export default function App(){
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)){setToast('Lütfen geçerli bir e-posta girin.');return}
     setSending(true)
     try{
-      // Cloudflare Pages Function + Resend üzerinden güvenli gönderim.
+      // Cloudflare Worker + Resend üzerinden güvenli gönderim.
       const res=await fetch('/api/contact',{
         method:'POST',
         headers:{'Content-Type':'application/json','Accept':'application/json'},

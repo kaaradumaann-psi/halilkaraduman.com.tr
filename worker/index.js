@@ -1,4 +1,5 @@
 const defaultRecipient = 'contact@halilkaraduman.com.tr'
+const defaultSender = 'Halil Karaduman <website@halilkaraduman.com.tr>'
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const json = (body, status = 200) => new Response(JSON.stringify(body), {
@@ -18,16 +19,19 @@ const escapeHtml = value => text(value)
   .replaceAll('"', '&quot;')
   .replaceAll("'", '&#039;')
 
-export function onRequestOptions() {
-  return new Response(null, {
-    status: 204,
-    headers: { Allow: 'POST, OPTIONS' }
-  })
-}
+async function handleContact(request, env) {
+  if (request.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 204,
+      headers: { Allow: 'POST, OPTIONS' }
+    })
+  }
 
-export async function onRequestPost({ request, env }) {
+  if (request.method !== 'POST') {
+    return json({ ok: false, message: 'Bu endpoint yalnızca POST kabul eder.' }, 405)
+  }
+
   let payload
-
   try {
     payload = await request.json()
   } catch {
@@ -53,11 +57,15 @@ export async function onRequestPost({ request, env }) {
     return json({ ok: false, message: 'Geçerli bir e-posta adresi girin.' }, 400)
   }
 
-  if (!env?.RESEND_API_KEY || !env?.CONTACT_FROM) {
+  const apiKey = text(env?.RESEND_API_KEY)
+  const recipient = text(env?.CONTACT_TO) || defaultRecipient
+  const sender = text(env?.CONTACT_FROM) || defaultSender
+
+  if (!apiKey) {
+    console.error('RESEND_API_KEY is not configured')
     return json({ ok: false, message: 'İletişim servisi henüz yapılandırılmadı.' }, 503)
   }
 
-  const recipient = env.CONTACT_TO || defaultRecipient
   const subject = `halilkaraduman.com.tr — ${name} iletişim formu`
   const html = `
     <h2>Web sitesinden yeni iletişim mesajı</h2>
@@ -71,11 +79,11 @@ export async function onRequestPost({ request, env }) {
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${env.RESEND_API_KEY}`,
+        Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        from: env.CONTACT_FROM,
+        from: sender,
         to: [recipient],
         reply_to: email,
         subject,
@@ -91,7 +99,24 @@ export async function onRequestPost({ request, env }) {
 
     return json({ ok: true })
   } catch (error) {
-    console.error('Contact function error:', error)
+    console.error('Contact Worker error:', error)
     return json({ ok: false, message: 'Mesaj gönderilemedi.' }, 502)
+  }
+}
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url)
+
+    if (url.pathname === '/api/contact' || url.pathname === '/api/contact/') {
+      return handleContact(request, env)
+    }
+
+    if (url.pathname.startsWith('/api/')) {
+      return json({ ok: false, message: 'Endpoint bulunamadı.' }, 404)
+    }
+
+    // Worker dışındaki tüm istekler Vite tarafından üretilen dist dosyalarına gider.
+    return env.ASSETS.fetch(request)
   }
 }

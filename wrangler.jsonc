@@ -1,0 +1,18 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "psikolog",
+  "main": "./worker/index.js",
+  "compatibility_date": "2026-09-16",
+  "workers_dev": true,
+  "preview_urls": true,
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  "vars": {
+    "CONTACT_FROM": "Halil Karaduman <website@halilkaraduman.com.tr>",
+    "CONTACT_TO": "contact@halilkaraduman.com.tr"
+  }
+}
