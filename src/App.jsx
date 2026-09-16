@@ -37,13 +37,11 @@ export default function App(){
   const [toast, setToast] = useState(null)
   const [form, setForm] = useState({ ad: '', email: '', mesaj: '', website: '' })
   const [sending, setSending] = useState(false)
-  // Kişi fotoğrafı: public/foto.(jpg|png|webp) commit'lenince otomatik devreye girer,
-  // yoksa geçici placeholder gösterilir.
+  // Kişi fotoğrafı: public/foto.(jpg|png|webp) commit'lenince otomatik devreye girer.
+  // Hiçbiri yoksa stok fotoğraf/isim yazısı yerine HK monoğramlı yedek daire gösterilir.
   const [photoIdx, setPhotoIdx] = useState(0)
-  const PHOTO_SOURCES = [
-    '/foto.jpg', '/foto.png', '/foto.webp',
-    'https://images.unsplash.com/photo-1556157388-97ed244727b5?auto=format&fit=crop&w=900&q=80',
-  ]
+  const [photoFailed, setPhotoFailed] = useState(false)
+  const PHOTO_SOURCES = ['/foto.jpg', '/foto.png', '/foto.webp']
 
   const go = id => {
     const target = document.querySelector(id)
@@ -139,7 +137,22 @@ export default function App(){
               <strong>tasarlarım.</strong>
             </h1>
             <div className="avatar-wrap">
-              <img className="avatar" src={PHOTO_SOURCES[photoIdx]} alt="Halil Karaduman" onError={() => setPhotoIdx(i => Math.min(i + 1, PHOTO_SOURCES.length - 1))} />
+              {photoFailed ? (
+                /* Fotoğraf yoksa: HK monoğramlı yedek daire */
+                <div className="avatar avatar--fallback" role="img" aria-label="Halil Karaduman — HK monoğramı">
+                  <img src="/logo-mark.png" alt="" />
+                </div>
+              ) : (
+                <img
+                  className="avatar"
+                  src={PHOTO_SOURCES[photoIdx]}
+                  alt="Halil Karaduman"
+                  onError={() => {
+                    if (photoIdx < PHOTO_SOURCES.length - 1) setPhotoIdx(i => i + 1)
+                    else setPhotoFailed(true)
+                  }}
+                />
+              )}
             </div>
             <p className="hero-sub">
               <strong>Halil Karaduman</strong> — psikoloji bilimini daha sade ve güvenilir kılmak için dijital araçlar üzerine çalışıyorum. Klinik doğruluk ve gizlilik her şeyden önce.
