@@ -95,21 +95,27 @@ export default function App(){
         })
       })
       const data = await res.json().catch(() => null)
-      if(!res.ok || !data?.ok) throw new Error(data?.message || 'Gönderim başarısız')
+      if(!res.ok || !data?.ok) {
+        const error = new Error(data?.message || 'Mesaj gönderilemedi. Lütfen daha sonra tekrar deneyin.')
+        error.isServerResponse = true
+        throw error
+      }
       setToast('Mesajın gönderildi ✓ — en kısa sürede döneceğim.')
       setForm({ ad: '', email: '', mesaj: '', website: '' })
     } catch(err){
-      // Sunucu yapılandırılmadıysa veya erişilemiyorsa mail uygulamasını aç.
-      const subject = encodeURIComponent(`halilkaraduman.com.tr — ${form.ad}`)
-      const body = encodeURIComponent(`Ad: ${form.ad}\nE-posta: ${form.email}\n\nMesaj:\n${form.mesaj}`)
-      window.location.href = `mailto:contact@halilkaraduman.com.tr?subject=${subject}&body=${body}`
-      setToast('Mail uygulamanız açıldı — oradan gönderebilirsiniz.')
+      if (err.isServerResponse) {
+        setToast(err.message)
+      } else {
+        // Ağ bağlantısı kurulamazsa kullanıcıya e-posta uygulaması üzerinden alternatif sun.
+        const subject = encodeURIComponent(`halilkaraduman.com.tr — ${form.ad}`)
+        const body = encodeURIComponent(`Ad: ${form.ad}\nE-posta: ${form.email}\n\nMesaj:\n${form.mesaj}`)
+        window.location.href = `mailto:contact@halilkaraduman.com.tr?subject=${subject}&body=${body}`
+        setToast('Bağlantı kurulamadı — mail uygulamanız açıldı.')
+      }
     } finally {
       setSending(false)
     }
   }
-  const onMmpi = e => { e.preventDefault(); setToast('MMPI platformu çok yakında — şimdilik aktif değil.') }
-
   return (
     <>
       <nav className="nav">
@@ -222,16 +228,26 @@ export default function App(){
           </div>
           <div className="card reveal">
             <div className="card-top">
-              <div className="card-icon">◎</div>
-              <span className="card-badge">Yakında</span>
+              <div className="card-icon" aria-hidden="true">
+                <svg className="mmpi-symbol" width="28" height="28" viewBox="0 0 26 26" fill="none">
+                  <path d="M9 3H3v6M17 3h6v6M23 17v6h-6M9 23H3v-6" stroke="currentColor" strokeWidth="2.2" />
+                  <circle cx="10" cy="10" r="1.8" fill="currentColor" />
+                  <circle cx="16" cy="10" r="1.8" stroke="currentColor" strokeWidth="1.5" />
+                  <circle cx="10" cy="16" r="1.8" stroke="currentColor" strokeWidth="1.5" />
+                  <circle cx="16" cy="16" r="1.8" fill="currentColor" />
+                </svg>
+              </div>
+              <div className="card-badges">
+                <span className="card-badge card-badge--new">Yeni</span>
+              </div>
             </div>
             <h3>MMPI Değerlendirme Aracı</h3>
-            <p>MMPI formlarını hızlı ve gizlilik odaklı puanlayan bir araç. Sade, hatasız ve klinisyen dostu olması için tasarlanıyor.</p>
-            <button onClick={onMmpi} className="btn-full">
+            <p>MMPI değerlendirme sürecini hızlandıran, gizliliği ön planda tutan sade ve güvenilir bir dijital araç.</p>
+            <a href="http://mmpi.halilkaraduman.com.tr" className="btn-full">
               MMPI Sitesine Git
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="white" strokeWidth="1.6" /></svg>
-            </button>
-            <div className="hint">Henüz aktif değil — çok yakında</div>
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3l5 5-5 5" stroke="white" strokeWidth="1.6" /></svg>
+            </a>
+            <div className="hint">MMPI platformuna yönlendirir</div>
           </div>
         </div>
       </section>
@@ -334,9 +350,9 @@ export default function App(){
             </div>
             <div className="form-wrap reveal">
               <form onSubmit={onSubmit} noValidate>
-                <div className="field"><label>Adınız</label><input value={form.ad} onChange={e => setForm({ ...form, ad: e.target.value })} placeholder="Ad Soyad" required autoComplete="name" /></div>
-                <div className="field"><label>E-posta</label><input type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="ornek@mail.com" required autoComplete="email" /></div>
-                <div className="field"><label>Mesajınız</label><textarea value={form.mesaj} onChange={e => setForm({ ...form, mesaj: e.target.value })} placeholder="Merhaba Halil, ..." rows="4" required /></div>
+                <div className="field"><label htmlFor="contact-name">Adınız</label><input id="contact-name" value={form.ad} onChange={e => setForm({ ...form, ad: e.target.value })} placeholder="Ad Soyad" required maxLength={120} autoComplete="name" /></div>
+                <div className="field"><label htmlFor="contact-email">E-posta</label><input id="contact-email" type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="ornek@mail.com" required maxLength={254} autoComplete="email" inputMode="email" /></div>
+                <div className="field"><label htmlFor="contact-message">Mesajınız</label><textarea id="contact-message" value={form.mesaj} onChange={e => setForm({ ...form, mesaj: e.target.value })} placeholder="Merhaba Halil, ..." rows="4" required maxLength={5000} /></div>
                 {/* Basit honeypot: normal ziyaretçiye görünmez, botları filtrelemeye yardımcı olur. */}
                 <input type="text" name="website" value={form.website} onChange={e => setForm({ ...form, website: e.target.value })} style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
                 <button type="submit" className="btn-submit" disabled={sending}>{sending ? 'Gönderiliyor…' : 'Gönder'} <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="white" strokeWidth="1.6" /></svg></button>
@@ -363,7 +379,7 @@ export default function App(){
         </div>
       </footer>
 
-      {toast && <div className="toast">{toast}</div>}
+      {toast && <div className="toast" role="status" aria-live="polite">{toast}</div>}
     </>
   )
 }

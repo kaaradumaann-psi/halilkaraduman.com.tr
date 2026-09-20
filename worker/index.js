@@ -71,9 +71,18 @@ async function handleContact(request, env) {
     return json({ ok: false, message: 'Çok fazla deneme. Lütfen biraz sonra tekrar dene.' }, 429)
   }
 
+  const contentType = request.headers.get('Content-Type') || ''
+  if (!contentType.toLowerCase().startsWith('application/json')) {
+    return json({ ok: false, message: 'Content-Type application/json olmalıdır.' }, 415)
+  }
+
   let payload
   try {
-    payload = await request.json()
+    const rawBody = await request.text()
+    if (new TextEncoder().encode(rawBody).byteLength > MAX_BODY_BYTES) {
+      return json({ ok: false, message: 'İstek çok büyük.' }, 413)
+    }
+    payload = JSON.parse(rawBody)
   } catch {
     return json({ ok: false, message: 'Geçersiz istek.' }, 400)
   }
